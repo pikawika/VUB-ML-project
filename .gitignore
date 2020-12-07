@@ -1,3 +1,4 @@
-code/test
-code/train
+code/images
 code/starterskit/features
+code/starterskit/__pycache__
+code/starterskit/.ipynb_checkpoints
