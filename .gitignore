@@ -2,3 +2,5 @@ code/images
 code/provided/features
 code/provided/__pycache__
 code/provided/.ipynb_checkpoints
+**/.ipynb_checkpoints
+**/.DS_Store
