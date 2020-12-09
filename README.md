@@ -5,12 +5,10 @@
 - **StudentID**: 568702
 - **Affiliation**: VUB - Master Computer Science: AI
 
-## Finished task 
-- [Self-contained PDF file](TODO)
+## Main files
+- [Intermediate report](TODO)
+- [Final report](TODO)
 
 ## Installig required files
 > pip install -r requirements.txt
-
-## Other files
-- TODO
    
