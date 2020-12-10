@@ -2,20 +2,24 @@
 
 This intermediate report documents the development of an animal classification AI using a more "old-school" approach of Visual-Bag-of-Words models.
 The AI should be capable of differentiating 12 different animals.
-These models, and thus the AI, are developed in Python-based Jupyter Notebooks accompanied with this document.
-This animal classification AI was developed as a fulfillment of the Machine Learning course requirements and was used to compete in the organised Kaggle competition \citep{kaggle_competition}.
+These models, and thus the AI, are developed in Python-based Jupyter Notebooks accompanied by this document.
+This animal classification AI was developed as a fulfilment  of the Machine Learning course requirements and was used to compete in the organised Kaggle competition \citep{kaggle_competition}.
 
-Part \ref{part:about_the_code} of this report discusses the accompanied code in general. Section \ref{section:inc_files} explains which files are accompanied and which are the most important. 
+Part \ref{part:about_the_code} of this report discusses the accompanied code in general.
+Section \ref{section:inc_files} explains which files are accompanied and which are the most important. 
 Section \ref{section:ideology_dev_code} describes the ideology used to created the code. 
 To make testing multiple models easier, a form of \emph{pipeline} was created and is discussed in section \ref{section:typical_model_exploration}.
 
-In part \ref{part:data_analysis} the data analysis part of this project is discussed.
+In part \ref{part:data_analysis}, the data analysis part of this project is discussed.
 Section \ref{section:DA_data_distribution} talks about the unbalanced data distribution.
 In the next section, section \ref{section:DA_deeper_look_data}, a deeper look is taken into the data and possible preprocessing is discussed.
 The last 2 sections of this part, \ref{section:DA_feature_extraction} and \ref{section:DA_numerical_representation}, discuss how the feature extraction is dealt with and what the numerical representation looks like.
 
-
-TODO XXX linear baseline
+The linear baseline model is discussed in part \ref{part:linear_baseline}.
+This model is a fine-tuned Logistic Regression model from the SciKit Learn library.
+This model is often used to compare other models with.
+Only models that perform better then this baseline model should be considered.
+This part discusses the parameters used and the road to getting those optimal parameters.
 
 Finally, part \ref{part:whats_next} discusses future plans for this project.
 Section \ref{section:further_development} lists possible topics that can be explored to create a better animal classification AI.

@@ -4,6 +4,104 @@
 %------------------------------------
 
 \section{About this part}
-\label{section:LB_about_part}
+\label{section:LBM_about_part}
+A good linear model available in the SciKit Learn library is the Logistic Regression model.
+This model is often used as a linear baseline model to compare other models with.
+Only models scoring better then this linear baseline model should be considered.
+This part discusses the parameters found to be optimal for this model in this setting and the road to finding these optimal parameters.
+The Python-based Jupyter Notebook corresponding with this part is \emph{linear\_baseline\_model.ipynb}.
+
+%------------------------------------
+
+\section{Fine-tuning the input}
+\label{section:LBM_finetuning_features}
+The first step in finding optimal settings for the model is finding optimal settings for the input of the model.
+In this case, the parameters that can control the input is the number of features each image has and the descriptor used as discussed in part \ref{part:data_analysis}.
+SIFT is often referred to as the most famous and successful of the descriptor, but all of them should be explored.
+In general, more features often correspond to a better score, however, including many features can lead to overfitting of the model.
+The following values were tried
+\begin{itemize}
+    \item Descriptors: DAISY, ORB, FREAK, LUCID, VGG, BoostDesc, SIFT.
+    \item Feature amounts: 5, 20, 50, 100, 150, 250, 500.
+\end{itemize}
+
+A comparison was done by averaging the multi-class Log Loss score over 5 iterations for each of these feature amounts and descriptors.
+All of the resulting scores plotted on a graph can be found in the figures list at the end of this report.
+%The lowest score was achieved by the SIFT descriptor.
+%The optimal features amount seems to be around 100 for this descriptor.
+%The resulting scores for SIFT are plotted in figure \ref{fig:2-LBM-feature_amount_sift}.
+
+
+%\begin{figure}[H]
+%    \centering
+%    \fbox{\includegraphics[width=0.8\linewidth]{images/2-LBM-feature_amount_sift.png}}
+%    \captionsetup{width=0.7\linewidth}
+%    \captionsetup{justification=centering}
+%    \caption{Score in multi-class Log Loss of the Logistic Regression model using different amounts of features.}
+%    \label{fig:2-LBM-feature_amount}
+%\end{figure}
+
+
+%------------------------------------
+
+\section{Fine-tuning the validation set}
+\label{section:LBM_finetuning_validation_set}
+
+Since the training data is further split into a training set and a validation set, this splitting can also be fine-tuned.
+The parameter that can be fine-tuned in this case is \emph{test\_size} and whether or not to take into account that the data set is unbalanced.
+The latter is quite obvious as discussed in section \ref{section:DA_data_distribution}.
+The splitting should thus be done with the unbalance in mind since using random splitting could lead to test or train sets without instances of specific classes.
+To find an optimal test size, expressed in a percentage, a similar testing method to the one discussed in section \ref{section:LBM_finetuning_features} is used.
+
 TODO XXX
+
+
+%------------------------------------
+
+\section{Fine-tuning the model parameters}
+\label{section:LBM_finetuning_model}
+
+Now that all of the parameters available for the input are fine-tuned, the parameters of the model itself can be optimized.
+As found in the documentation from the \emph{LogisticRegression} function of the SciKit Learn library there are multiple parameters available \citep{scikit_learn}.
+The ones that are the most interesting are:
+\begin{itemize}
+    \item \emph{solver}
+    \begin{itemize}
+        \item Specifies which solver should be used for the optimization problem in the model.
+        \item \emph{lbfgs} is used as default and whilst a little slow, this parameter doesn't require further fine-tuning.
+    \end{itemize}
+    \item \emph{penalty}
+    \begin{itemize}
+        \item Since the \emph{lbfgs} solver is used, the default \emph{l2} penalization norm is the only one that can be used.
+    \end{itemize}
+    \item \emph{C}
+    \begin{itemize}
+        \item The regularisation hyperparameter C defaults to 1. Fine-tuning might be required.
+        \item TODO XXXX
+    \end{itemize}
+    \item \emph{max\_iter}
+    \begin{itemize}
+        \item Since there's convergence with the optimal settings, fine-tuning of this parameter is not required.
+    \end{itemize}
+    \item \emph{fit\_intercept}
+    \begin{itemize}
+        \item Boolean that specifies if a constant (a.k.a. bias or intercept) should be added to the decision function.
+        \item The results with this parameter set to true and false were checked and TODO XXX
+    \end{itemize}
+\end{itemize}
+
+
+%------------------------------------
+
+\section{The optimal settings for this model}
+\label{section:LBM_optimal}
+
+After all the fine-tuning discussed in the previous sections, the following settings were found to be optimal:
+\begin{itemize}
+    \item Descriptor used: TODO XXX
+    \item Feature amounts: TODO XXX
+    \item Sample size: TODO XXX
+    \item C: TODO XXX
+    \item Fit intercept: TODO XXX
+\end{itemize}
 

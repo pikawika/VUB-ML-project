@@ -3,17 +3,35 @@
 
 %------------------------------------
 
-\section{Files included with this report}
+\section{Files accompanied by this report}
 \label{section:inc_files}
-TODO XXX
+Since this report discusses the development of an AI, a lot of code is discussed as well.
+This code is not shown inside this document but is available on the GitHub repository \citep{github_project}.
+All code is written in Python-based Jupyter Notebooks.
+
+%------------------------------------
+
 
 \section{Ideology of the developed code}
 \label{section:ideology_dev_code}
-TODO XXX
+The Jupyter Notebooks have many inline comments and markdown blocks to make reading the code easier.
+If code is extensively discussed in this report a reference to the corresponding section is made inside the code. 
+Some of the gathered results come from time-consuming function calls.
+These can take multiple hours to receive.
+To spare some time, these results are saved in a Pickle file so they can be loaded in without having to do the function call.
+The Notebooks are written in a way that makes testing multiple models easy, paying extra attention to reusability. 
+
+%------------------------------------
 
 \section{A typical model exploration}
 \label{section:typical_model_exploration}
-TODO XXX
+The testing of a model consists of two main parts.
+Firstly the input of the model has to be optimized.
+Afterwards, the (hyper)parameters of the model itself can be optimized.
+These steps are clearly visible with the discussed models in this report.
+After optimizing everything in a standalone fashion, it has to be checked that these newly optimized parameters do not influence previously optimized parameters.
+
+%------------------------------------
 
 
 \section{Technical remarks}
@@ -21,4 +39,4 @@ TODO XXX
 
 This report was created in \LaTeX{} by modifying the excellent and well-known VUB themed template from Ruben De Smet (\citeyear{latex_template}). BibLaTeX was used for reference management and natbib was used for more citation control. 
 
-Most source files, for this report and the created models, are available on GitHub \citep{github_project}. Some files, like the used training images, were not included in this GitHub repository. Details about this can be found on the GitHub page (README file). The supplied code is written in Python-based Jupyter Notebooks. Rights to this GitHub repository can be asked from the author.
+Most source files, for this report and the created models, are available on GitHub \citep{github_project}. Some files, like the used training images, were not included in this GitHub repository. Details about this can be found on the GitHub page (README file). Rights to this GitHub repository can be asked from the author.
