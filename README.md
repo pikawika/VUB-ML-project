@@ -14,5 +14,5 @@ The required libraries can be installed by executing the following command from 
 > pip install -r requirements.txt
 
 Some of the required files are left out to limit the size of this GitHub repository. This includes:
-- "feautures"  folder inside the provided code folder, this corresponds with the starterskit folder
+- "feautures"  folder inside the provided code folder AND  the developed code folder.
 - "images" folder inside the code folder, inside this folder are the test and train folder as provided by the Kaggle competition. 

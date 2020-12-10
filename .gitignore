@@ -1,6 +1,6 @@
 code/images
 code/provided/features
-code/provided/__pycache__
-code/provided/.ipynb_checkpoints
+code/developed/features
 **/.ipynb_checkpoints
+**/__pycache__
 **/.DS_Store
