@@ -12,11 +12,16 @@ Because of this, a special thanks is given to the teacher and teaching assistant
 In the time available until the final deadline many new possibilities for creating a better model will be explored, this might include but is not limited to:
 \begin{itemize}
     \item Preprocessing can be explored.
+    \item Optimisation of the point of interest detection can be done.
+    \item Testing other descriptors could be done.
+    \item A better alternative to splitting the data into train and validation sets can be explored, e.g. StratifiedKFold.
+    \item Testing different cluster algorithm can be explored.
     \item More available models need to be tested and compared to the linear baseline model.
     \item Nesting multiple good performing models might be an option, using weighted probabilities.
+    \item Making a full pipeline for everything done in the linear baseline model and using grid search for all parameters. Results should be similar but this would be a more elegant way of doing things and it could form a faster template for testing new models.
 \end{itemize}
 
-Some aspects of the created models and pipeline might also be modified further once the open issues discussed in section \ref{section:open_issues} are resolved.
+Recommendation on which things to explore first is asked from the teaching assistants. Some aspects of the created models and pipeline might also be modified further once the open issues discussed in section \ref{section:open_issues} are resolved.
 
 %------------------------------------
 
@@ -26,5 +31,8 @@ Some aspects of the created models and pipeline might also be modified further o
 While developing the first models many questions arose. Most are already answered by googling or discussion with colleagues. Open questions that are not yet answered are listed below, for which guidance from the teaching assistants is asked.
 
 \begin{itemize}
-    \item The data is not available as a pickle file for the SURF descriptor.
+    \item The data is not available as a pickle file for the SURF descriptor. Can this be made available?
+    \item The code written for the linear baseline model hasn't been validated, however, since it will be used as a "template", it shouldn't have to many major errors.
+    \item Whilst experiments show that setting the class\_weight parameter to "balanced" results in worse scores on the Kaggle page, this is not what was expected. The reason why this isn't so is also unclear.
+    \item Does the unbalance of the training data cause issues when using a split for validation? E.g. bad classification on classes with few instances doesn't have a huge impact on the score while they will have a huge impact on the eventual Kaggle score. Is taking a fixed number of instances from each class a solution? Does the score have to be normalized over the class size?
 \end{itemize}
