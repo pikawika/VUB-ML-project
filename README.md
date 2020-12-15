@@ -42,3 +42,7 @@ Your comment on the class_weight parameter is great, it shows that you ask the r
 **General feedback:**
 
 Excellent start. I see a lot of good things, but also some (small) errors, which is normal of course.
+
+Model analysis! 
+
+Also, even though this does not affect your grades, I am genuinely surprised your Kaggle score is not better based on your clear efforts.
