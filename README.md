@@ -18,7 +18,7 @@ Some of the required files are left out to limit the size of this GitHub reposit
 - "images" folder inside the code folder, inside this folder are the test and train folder as provided by the Kaggle competition. 
 
 
-Feedback:
+**Feedback:**
 
 Don’t put in too much fluff and repeat stuff. I know you mean well, but it sometimes hinders readability of your document. Also, 25p is simply way too much for the intermediate (and even final) report.
 
@@ -39,6 +39,6 @@ SURF is left out by intention, if you want to use it, you can follow some tips i
 Your comment on the class_weight parameter is great, it shows that you ask the right questions. I won’t give away the actual answer to it, though, since it is important for your progress/report. Your next comment is related to it: I also can’t answer it directly, but I like that you think about these things, so good job already.
 
 
-General feedback:
+**General feedback:**
 
 Excellent start. I see a lot of good things, but also some (small) errors, which is normal of course.
