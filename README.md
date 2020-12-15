@@ -18,7 +18,7 @@ Some of the required files are left out to limit the size of this GitHub reposit
 - "images" folder inside the code folder, inside this folder are the test and train folder as provided by the Kaggle competition. 
 
 
-**Feedback:**
+## Feedback:
 
 Don’t put in too much fluff and repeat stuff. I know you mean well, but it sometimes hinders readability of your document. Also, 25p is simply way too much for the intermediate (and even final) report.
 
