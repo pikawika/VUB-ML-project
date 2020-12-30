@@ -1,0 +1,42 @@
+\chapter*{Appendix A: Layout of the code}
+\addcontentsline{toc}{chapter}{Appendix A: Layout of the code}
+
+TODO XXX
+
+%------------------------------------
+
+\chapter*{Appendix B: LRM parameters}
+\addcontentsline{toc}{chapter}{Appendix B: LRM parameters}
+
+As found in the documentation of the \texttt{LogisticRegression} function available in the SciKit Learn library there are multiple (optional) parameters \citep{scikit_learn}.
+The most interesting ones are:
+
+\begin{itemize}
+    \item \emph{solver}
+    \begin{itemize}
+        \item Specifies which solver should be used for the optimization problem in the model.
+        \item \emph{lbfgs} is used as default and whilst a little slow, this parameter doesn't require further fine-tuning.
+    \end{itemize}
+    \item \emph{penalty}
+    \begin{itemize}
+        \item Since the \emph{lbfgs} solver is used, the default \emph{l2} penalization norm is the only one that can be used.
+    \end{itemize}
+    \item \emph{class\_weight}
+    \begin{itemize}
+        \item This parameter defaults to None but can be set to balanced to take into account the unbalance in our data, as discussed in section \ref{section:DA_data_distribution}.
+        \item The results with this parameter set to balanced will be studied.
+    \end{itemize}
+    \item \emph{C}
+    \begin{itemize}
+        \item The regularisation hyperparameter C defaults to 1. Fine-tuning this could boost performance.
+    \end{itemize}
+    \item \emph{max\_iter}
+    \begin{itemize}
+        \item This parameter can be changed so that convergence might be found, which is not the case right now.
+    \end{itemize}
+    \item \emph{fit\_intercept}
+    \begin{itemize}
+        \item Boolean that specifies if a constant (a.k.a. bias or intercept) should be added to the decision function.
+        \item The results with this parameter set to true and false should be checked.
+    \end{itemize}
+\end{itemize}

@@ -1,0 +1,46 @@
+\part{About the code}
+\label{part:about_the_code}
+
+%------------------------------------
+
+\section{Files accompanied by this report}
+\label{section:inc_files}
+Since this report discusses the development of an AI, \textit{a lot of code} is discussed as well.
+This code is not shown inside this document but is available on the GitHub repository \citep{github_project}.
+All code is written in Python-based Jupyter Notebooks.
+
+%------------------------------------
+
+
+\section{Ideology of the developed code}
+\label{section:ideology_dev_code}
+The Jupyter Notebooks have many inline comments and markdown blocks to make reading the code easier.
+If code is extensively discussed in this report, a reference to the corresponding section is made inside the code. 
+Some of the gathered results come from time-consuming function calls.
+These can take \textit{multiple hours} to complete.
+To spare some time, these results are saved in a Pickle file so they can be loaded in without having to do the function call.
+The Notebooks are written in a way that makes testing multiple models easy, paying extra attention to reusability. 
+
+%------------------------------------
+
+\section{A typical model exploration}
+\label{section:typical_model_exploration}
+The testing of a model consists of two main parts.
+Firstly the input of the model has to be optimized.
+Afterwards, the (hyper)parameters of the model itself can be optimized.
+These steps are clearly visible with the discussed models in this report since they follow a form of \emph{template}.
+This template makes testing new models rather easy.
+After optimizing everything in a standalone fashion, it has to be checked that these newly optimized parameters do not influence previously optimized parameters.
+The resulting model should perform better than the linear baseline model in order to be considered.
+Whilst many abstractions were made and creating a \emph{one-call pipeline} is possible, it's chosen to not do so.
+This is because \textit{human reasoning} can be required in finding truly optimal parameters.
+It also makes understanding and discussing the model easier.
+After all, the goal of this report is to gather an understanding on how these models work, not solely  to get the best Kaggle score.
+
+%------------------------------------
+
+
+\section{Technical remarks}
+\label{section:technical_remarks}
+
+Most source files, for this report and the created models, are available on GitHub \citep{github_project}. Some files, like the used training images, were not included in this GitHub repository. Details about this can be found on the GitHub page (\texttt{README} file). Rights to this GitHub repository can be asked from the author. This report was created in \LaTeX{} by modifying the VUB themed template from Ruben De Smet (\citeyear{latex_template}).
