@@ -1,5 +1,11 @@
 # Machine Learning project
 
+## Table of contents
+> - [Student info]("#student-info")
+> - [Main files]("#main-files")
+> - [Setting up the environment](#setting-up-the-environment)
+> - [Feedback](#feedback)
+
 ## Student info
 - **Name**: Bontinck Lennert
 - **StudentID**: 568702
@@ -9,9 +15,16 @@
 - [Intermediate report](Intermediate_Report_ML_Project_Bontinck_Lennert_568702_VUB.pdf)
 - [Final report - Coming](Final_Report_ML_Project_Bontinck_Lennert_568702_VUB.pdf)
 
-## Installing required libraries and files
+## Setting up the environment
 The required libraries can be installed by executing the following command from the root of this directory.
-> pip install -r requirements.txt
+````bash
+pip install -r requirements.txt
+````
+
+If using Anaconda it is also possible to import the complete environment used by executing:
+````bash
+conda env create -f environment.yml
+````
 
 Some of the required files are left out to limit the size of this GitHub repository. This includes:
 - "feautures"  folder inside the provided code folder AND  the developed code folder.
