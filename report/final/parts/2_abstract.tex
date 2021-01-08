@@ -1,3 +1,4 @@
+% done
 \chapter*{Abstract}
 
 This report documents the development of an \textit{animal classification AI} using a more \textit{old-school approach} of Visual-Bag-of-Words models.
@@ -10,19 +11,28 @@ Section \ref{section:inc_files} explains which files are the most important.
 Section \ref{section:ideology_dev_code} describes the ideology used to created the code. 
 To make testing multiple models easier, \textit{a template} for model exploration was created and is discussed in section \ref{section:typical_model_exploration}.
 
-In part \ref{part:data_analysis}, the data analysis part of this project is discussed.
-Section \ref{section:DA_data_distribution} talks about the unbalanced data distribution.
-In the next section, section \ref{section:DA_deeper_look_data}, a deeper look is taken into the data and possible preprocessing is discussed.
-The last few sections of this part discuss how the feature extraction is dealt with and what the numerical representation looks like.
+In part \ref{part:data_analysis}, the \textit{data analysis} part of this project is discussed.
+Section \ref{section:DA_data_distribution} talks about the \textit{unbalanced data} distribution.
+In the next section, section \ref{section:DA_deeper_look_data}, a deeper look is taken into the data and possible \textit{preprocessing} is discussed.
+The last few sections of this part discuss how the \textit{feature extraction} is dealt with and what the numerical representation looks like.
 
-The linear baseline model is discussed in part \ref{part:linear_baseline}.
-This model is a fine-tuned Logistic Regression model from the SciKit Learn library.
+The \textit{linear baseline model} is discussed in part \ref{part:linear_baseline}.
+This model is a fine-tuned \textit{Logistic Regression model} from the SciKit Learn library.
 This model is often used to compare other models with.
 Only models that perform better then this baseline model should be considered.
 This part discusses the parameters used and the road to finding those optimal parameters.
 
-TODO XXX
+Afterwards \textit{Support vector Classifiers} (SVC) are explored.
+Part \ref{part:svc} discusses non-linear SVC models with different kernels and finds the \textit{rbf kernel} to be the best from three tested kernels.
+Part \ref{part:linear_svc} focuses on linear SVC models in a similar fashion and finds them to perform worse.
+An ensemble approach is discussed in part \ref{part:gradien_boost}.
+This approach makes use of Gradient Boosting which, while interesting, didn't perform well.
 
-Finally, don't let the page count scare you.
-Due to clear separation in parts and large figures the page count of this document doesn't represent the length of it's actual content.
-Content that isn't crucial or is a repetition of supplied information is given as appendixes.
+It is chosen to do the model analysis in a separate part, part \ref{part:model_anal}.
+Afterwards, part \ref{part:final_model} goes over some other possible optimisations considering what is learned from all experiments thus far.
+Some of these are implemented whilst others are just discussed in a theoretical manner.
+This results in the final, best performing, model.
+Afterwards, in part \ref{part:conclusion}, a short conclusion is given.
+
+It is noted that the page count of this document doesn't represent its actual length due to clear part separation from the used template and large figures.
+Content that isn't crucial or is a repetition of supplied information is discarded or given as an appendix.

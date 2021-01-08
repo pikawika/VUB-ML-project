@@ -1,3 +1,4 @@
+% done
 \part{Data analysis}
 \label{part:data_analysis}
 
@@ -13,7 +14,7 @@ This means that only the labelled training images can be used to create and vali
 To avoid altering the model to perform well on the supplied test data and not in general, only the training data will be analysed.
 All code used for this part is available under the developed code folder on GitHub, in the Jupyter Notebook \texttt{data\_analysis.ipynb}.
 This part will only analyze the data and make suggestions for possible preprocessing, it won't manipulate the data just yet.
-This notebooks allows for changing parameters easily, which is crucial since this analysis has to be done for multiple descriptors and settings.
+This notebook allows for changing parameters easily, which is crucial since this analysis has to be done for multiple descriptors and settings.
 
 %------------------------------------
 
@@ -57,7 +58,7 @@ The most noteworthy findings are listed here:
 
 This diversity in the provided training set is expected since it has been scraped from the web.
 This also means that \emph{noise} can be expected, another important factor to keep in mind when choosing and optimizing models.
-Many of the listed things can be minified by doing some clever prepossessing of the images.
+Many of the listed things can be minified by doing some clever prepossessing of the images or are already taken into account with by the used descriptor.
 
 
 %------------------------------------
@@ -67,38 +68,32 @@ Many of the listed things can be minified by doing some clever prepossessing of 
 
 Some feature extraction has already been provided.
 In short, images are converted from there typical RGB representation to a numerical representation of interesting points, which can be used as input for our model.
-How this is done and could be optimized is briefly discussed here.
+How this is done and could be optimized is briefly discussed here since it consists of provided code for the Kaggle competition.
 
 Instead of using the whole image as data, only a select few of \textit{interesting points} of the image are taken into consideration.
-These interesting points of an image are found by using the \emph{Shi-Tomasi corner detector}.
-As the name suggest, these interesting points are \textit{strong corners on an image}.
-The following important parameters for the \texttt{features.extractShiTomasiCorners} function call are:
-\begin{itemize}
-    \item Maximum number of interesting points = 500
-    \item Minimum Euclidean distance between interesting points = 20
-\end{itemize}
+These interesting points of an image are often found by using the \emph{Shi-Tomasi corner detector}, but some descriptors have different implementations.
+As the name suggests, these interesting points are \textit{strong corners on an image}.
 
-\clearpage
 Shown in figure \ref{fig:1-poi} is an example output of interesting points found by the Shi-Tomasi corner detector.
-It's clear that it's performance varies a lot, but finding interesting points isn't an easy task and thus the results are better then they might seem on first sight.
-This method might benefit from fine-tuning and earlier preprocessing of the data.
+It's clear that its performance varies a lot, but finding interesting points isn't an easy task and thus the results are better then they might seem on first sight.
+It's also noted that SIFT is used for the models in this report, which uses a different, patented, technique for interesting point detection.
 
 \begin{figure*}[ht]
     \centering
     \begin{subfigure}{.35\textwidth}
         \centering
-        \fbox{\includegraphics[width=\textwidth]{images/1/1-data_analysis-POI_chicken.png}}
+        \fbox{\includegraphics[width=0.9\textwidth]{images/1/1-data_analysis-POI_chicken.png}}
         \captionsetup{width=0.9\linewidth}
         \captionsetup{justification=centering}
-        \caption{First chicken from train data.}
+        \caption{First chicken in data.}
     \end{subfigure}
     \hspace{1cm}
     \begin{subfigure}{.52\textwidth}
         \centering
-        \fbox{\includegraphics[width=\textwidth]{images/1/1-data_analysis-POI_german_shepherd.png}}
+        \fbox{\includegraphics[width=0.9\textwidth]{images/1/1-data_analysis-POI_german_shepherd.png}}
         \captionsetup{width=0.9\linewidth}
         \captionsetup{justification=centering}
-        \caption{First German shepherd from train data}
+        \caption{First German shepherd in train data}
     \end{subfigure}
     \captionsetup{width=0.8\linewidth}
     \captionsetup{justification=centering}
@@ -112,26 +107,24 @@ This method might benefit from fine-tuning and earlier preprocessing of the data
 \section{The numerical representation}
 \label{section:DA_numerical_representation}
 
-Finding interesting points is only half of the work.
 These interesting points now need to be represented by numerical values that have actual meaning.
 Remember from section \ref{section:DA_deeper_look_data} that the provided images differ a lot.
 Thus the numerical representation, generated by a descriptor, has to be so that it minifies the impact of different lighting, scaling...
-afterwards, these values can be clustered together.
-Clustering is done by the \texttt{createCodebook} function which uses Mini-Batch K-Means clustering from the SciKit Learn library.
-Opting for a different clustering algorithm and/or fine-tuning its (hyper)parameters might result in better performance of the chosen model.
+afterwards, these values can be clustered together using the \texttt{createCodebook} function which uses Mini-Batch K-Means clustering.
+This could also benefit from fine-tuning.
 
-An overview showing histograms for each word (cluster) and a corresponding correlation matrix is shown in figure \ref{fig:1-cm}.
-From the histogram, it is visible that the values are normalized as was discussed.
+An overview showing histograms for each word (cluster) and a corresponding correlation matrix when opting for SIFT with 30 clusters is shown in figure \ref{fig:1-cm}.
+It is visible that the values are normalized.
 This would have to be checked for all descriptors used and perhaps some outliers would need to be removed.
-The correlation between these clusters doesn't seem too dramatic when opting for 30 clusters.
-A low correlation between clusters is mostly positive for model building since it means each cluster represent a distinct concept.
+The correlation between these clusters doesn't seem too dramatic in this case ($|$correlation value$| \neq 1 $).
+A low correlation between clusters is mostly positive for model building since it suggests each cluster represent a distinct concept.
 This is again something that would have to be checked for different parameters.
 
-\begin{figure*}[ht]
+\begin{figure}[H]
     \centering
     \begin{subfigure}{.45\textwidth}
         \centering
-        \fbox{\includegraphics[width=\textwidth]{images/1/1-data_analysis-feature_representation.png}}
+        \fbox{\includegraphics[width=0.7\textwidth]{images/1/1-data_analysis-feature_representation.png}}
         \captionsetup{width=0.9\linewidth}
         \captionsetup{justification=centering}
         \caption{Histogram for each cluster.}
@@ -139,13 +132,13 @@ This is again something that would have to be checked for different parameters.
     \hspace{1cm}
     \begin{subfigure}{.45\textwidth}
         \centering
-        \fbox{\includegraphics[width=\textwidth]{images/1/1-data_analysis-correlation_matrix.png}}
+        \fbox{\includegraphics[width=0.8\textwidth]{images/1/1-data_analysis-correlation_matrix.png}}
         \captionsetup{width=0.9\linewidth}
         \captionsetup{justification=centering}
         \caption{Correlation matrix for all clusters.}
     \end{subfigure}
     \captionsetup{width=0.8\linewidth}
     \captionsetup{justification=centering}
-    \caption{Data analysis of encoded images using 30 clusters.}
+    \caption{Data analysis of encoded images using SIFT with 30 clusters.}
     \label{fig:1-cm}
-\end{figure*}
+\end{figure}

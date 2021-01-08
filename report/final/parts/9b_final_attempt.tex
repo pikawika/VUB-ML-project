@@ -1,0 +1,72 @@
+% TODO volledig
+\part{The final model}
+\label{part:final_model}
+
+%------------------------------------
+
+\section{About this part}
+\label{section:opt_about_part}
+
+Whilst a great insight on the working of different models and a typical AI pipeline has been achieved with the experiments discussed so far, many things were left unexplored.
+This is mostly due to limited computational power and time available.
+A final attempt is made to make a better performing model using the further insight received from the model analysis of part \ref{part:model_anal}.
+Things that were not tried but which are \textit{assumed} to increase performance are also listed here.
+This part will only briefly discuss all steps tried since many trials resulted in worse performance.
+The Notebook corresponding with this part is \texttt{final\_model.ipynb}.
+
+%------------------------------------
+
+\section{Making a better model}
+\label{section:opt_better_model}
+
+From what was learned in the previous parts, a final attempt at making the best linear baseline model (LBM) and support vector classifier (SVC) model was made.
+The following things were tried and are available in the notebook:
+\begin{itemize}
+    \item Different scalers and transformers were tried as preprocessing. The SVC model did not benefit from this but applying the polynomial features transformer on the LBM model increased the performance by 0.01 on the test set and on Kaggle (now 1.57203)!
+    \item The train set was balanced and overfitted, neither of which increased global or individual performance. 
+    \item Neither \texttt{AdaBoostClassifier} or the \texttt{BaggingClassifier} to make an ensemble of models performed well. This can be expected since such ensembles work well when ensembling \textit{weak models}, which SVC and the LBM are not.
+    \item TODO XXX 
+    \item For the final model, once all parameters are fine-tuned, the complete training set will be used. This means no scoring can be done except for a Kaggle submission since there is no unseen data left, but it does give the model more data to work with in its final form. 
+\end{itemize}
+
+% combining datasets eg dog dot give performance that is ok for all and then creating a new model for deviding between them
+
+%------------------------------------
+
+\section{Combining powers}
+\label{section:opt_ensemble}
+
+Multiple models are now finalised, each having some strengths and weaknesses. 
+As a final approach, a model is made which uses the TODO XXX under the hood.
+It works as follows:
+\begin{itemize}
+    \item A class \texttt{final\_model} is made which has a \texttt{fit} and a \texttt{predict_proba} function.
+    \item When fitting this class, it fits all the underlying models.
+    \item When predicting with this class, the \texttt{predict_proba} function of the underlying models are called and the results are saved. It is then decided which model to follow using weighted predictions as follows:
+    \begin{itemize}
+        \item TODO XXX
+    \end{itemize}
+\end{itemize}
+
+%------------------------------------
+
+\section{Unexplored possibilities}
+\label{section:opt_unexplored}
+
+Whilst the achieved model performance is average when looking at the Kaggle leader board, some interesting possible optimisations that came to mind weren't implemented.
+To show that these were thought of and as possible further extensions some unexplored possibilities are listed here:
+\begin{itemize}
+    \item Manipulating the images before using SIFT on them, although trivial actions such as resizing are expected to have minimal impact since SIFT determines interesting points in a manner which is not directly dependent of orientation or size.
+    \item Fine-tuning of the SIFT descriptor parameters. Experimenting with selections of features instead of just limiting/increasing them.
+    \item Using a different descriptor such as HoG (Histogram of Gradients) which is said to work well with humans and animals.
+    \item Trying more models such as XGBoost, a modification on the tried Gradient Boosting model.
+    \item Using libraries to make a final ensemble of the different good performing models instead of using weighted preferences.
+    \item The decision was made to work with the elbow model to determine an optimal amount of clusters, which turns out to be around 100. Performance could increase when bumping up this cluster amount (e.g. > 1000) and opting for the daisy descriptor as discussed, but all parameters would need re-tuning and the risk of overfitting becomes greater.
+\end{itemize}
+
+%------------------------------------
+
+\section{The final model and received score}
+\label{section:opt_score}
+
+TODO XXX
