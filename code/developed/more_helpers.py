@@ -3,10 +3,10 @@ import numpy as np
 import glob
 import time
 import csv
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import PowerTransformer
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.cluster import KMeans
-from sklearn.cluster import GaussianMixture
+from sklearn.mixture import GaussianMixture
 import pandas as pd
 
 # to optimize
@@ -60,24 +60,61 @@ def createCodebookFullK(features, codebook_size=100):
     print('training took {} seconds'.format(end-start))
     return codebook
 
-# to optimize
-def createCodebookMiniKWithPreProc(features, codebook_size=100):
+# reaches convergence pretty quick and is stable
+def createCodebookFullKWithPreProc(features, codebook_size=100):
     """Creates a visual BOW codebook"""
+    print("Using n_init = 4 and max_iter = 500")
+    print("Using PowerTransformer")
     train_features_to_encode = []
     for image_features in features:
         train_features_to_encode.append(image_features.data)
     train_features_to_encode = np.concatenate(train_features_to_encode, axis=0)
-    scaler = StandardScaler()
-    codebook = MiniBatchKMeans(n_clusters=codebook_size,
-                               max_iter = 100,
-                               reassignment_ratio = 0.01,
-                               batch_size=codebook_size * 30)
+    scaler = PowerTransformer()
+    codebook = KMeans(n_clusters=codebook_size,
+                      n_init = 4,
+                      max_iter = 500,
+                      n_jobs = -1,
+                      verbose = 3)
     start = time.time()
     train_features_to_encode = scaler.fit_transform(train_features_to_encode)
     codebook.fit(train_features_to_encode)
     end = time.time()
     print('training took {} seconds'.format(end-start))
     return codebook
+
+# to optimize
+def createCodebookMiniKWithPreProc(features, codebook_size=100):
+    """Creates a visual BOW codebook"""
+    print("Using manual")
+    train_features_to_encode = []
+    for image_features in features:
+        train_features_to_encode.append(image_features.data)
+    train_features_to_encode = np.concatenate(train_features_to_encode, axis=0)
+    scaler = QuantileTransformer()
+    codebook = MiniBatchKMeans(n_clusters=codebook_size,
+                               max_iter = 100,
+                               reassignment_ratio = 0.01,
+                               batch_size=codebook_size * 30)
+    start = time.time()
+    #train_features_to_encode = scaler.fit_transform(train_features_to_encode)
+    train_features_to_encode = np.multiply(train_features_to_encode, np.abs(train_features_to_encode))
+    codebook.fit(train_features_to_encode)
+    end = time.time()
+    print('training took {} seconds'.format(end-start))
+    return codebook, scaler
+
+def encodeImageWithPreProc(features, codebook, scaler):
+    """Encodes one image given a visual BOW codebook"""
+    # find the minimal feature distance for all patches of the image
+    features = scaler.transform(features)
+    #features = np.multiply(features, np.abs(features))
+    visual_words = codebook.predict(features)
+    word_occurrence = pd.DataFrame(visual_words, columns=['cnt'])['cnt'].value_counts() 
+    bovw_vector = np.zeros(codebook.n_clusters) 
+    for key in word_occurrence.keys():
+        bovw_vector[key] = word_occurrence[key]
+    bovw_feature = bovw_vector / np.linalg.norm(bovw_vector)
+    return bovw_feature
 
 # to optimize
 def createCodebookMiniK(features, codebook_size=100):
