@@ -48,8 +48,8 @@ def createCodebookFullK(features, codebook_size=100):
 # higer max iterations, lower number of inits to reduce computational time, transforms data
 def createCodebookFullKWithPreProc(features, codebook_size=100):
     """Creates a visual BOW codebook"""
-    print("Using n_init = 4 and max_iter = 500")
-    print("Using PowerTransformer")
+    print("Using n_init = 4 and max_iter = 600")
+    print("Using PowerTransformer and K means (full)")
     train_features_to_encode = []
     for image_features in features:
         train_features_to_encode.append(image_features.data)
@@ -57,7 +57,7 @@ def createCodebookFullKWithPreProc(features, codebook_size=100):
     scaler = PowerTransformer()
     codebook = KMeans(n_clusters=codebook_size,
                       n_init = 4,
-                      max_iter = 500,
+                      max_iter = 600,
                       n_jobs = -1,
                       verbose = 3)
     start = time.time()
@@ -65,7 +65,7 @@ def createCodebookFullKWithPreProc(features, codebook_size=100):
     codebook.fit(train_features_to_encode)
     end = time.time()
     print('training took {} seconds'.format(end-start))
-    return codebook
+    return codebook, scaler
 
 # Transforms data using PowerTransformer, which was optimal
 def createCodebookMiniKWithPreProc(features, codebook_size=100):
@@ -101,22 +101,3 @@ def encodeImageWithPreProc(features, codebook, scaler):
         bovw_vector[key] = word_occurrence[key]
     bovw_feature = bovw_vector / np.linalg.norm(bovw_vector)
     return bovw_feature
-
-# to optimize
-def createCodebookGaussianMixture(features, codebook_size=100):
-    """Creates a visual BOW codebook"""
-    train_features_to_encode = []
-    for image_features in features:
-        train_features_to_encode.append(image_features.data)
-    train_features_to_encode = np.concatenate(train_features_to_encode, axis=0)
-    codebook = GaussianMixture(n_components=codebook_size,
-                               max_iter = 200,
-                               n_init = 4,
-                               verbose = 3,
-                               verbose_interval = 25
-                              )
-    start = time.time()
-    codebook.fit(train_features_to_encode)
-    end = time.time()
-    print('training took {} seconds'.format(end-start))
-    return codebook
