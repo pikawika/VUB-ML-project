@@ -41,17 +41,17 @@ def createCodebookMiniK(features, codebook_size=100):
     print('training took {} seconds'.format(end-start))
     return codebook
 
-# to optimize (crtly testing)
+# reaches convergence pretty quick and is stable
 def createCodebookFullK(features, codebook_size=100):
     """Creates a visual BOW codebook"""
-    print("Using n_init = 10 and max_iter = 600")
+    print("Using n_init = 4 and max_iter = 500")
     train_features_to_encode = []
     for image_features in features:
         train_features_to_encode.append(image_features.data)
     train_features_to_encode = np.concatenate(train_features_to_encode, axis=0)
     codebook = KMeans(n_clusters=codebook_size,
-                      n_init = 10,
-                      max_iter = 600,
+                      n_init = 4,
+                      max_iter = 500,
                       n_jobs = -1,
                       verbose = 3)
     start = time.time()
