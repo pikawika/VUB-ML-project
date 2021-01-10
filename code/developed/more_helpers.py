@@ -9,22 +9,7 @@ from sklearn.cluster import KMeans
 from sklearn.mixture import GaussianMixture
 import pandas as pd
 
-# to optimize
-def createCodebookAffinity(features, codebook_size=100):
-    """Creates a visual BOW codebook"""
-    train_features_to_encode = []
-    for image_features in features:
-        train_features_to_encode.append(image_features.data)
-    train_features_to_encode = np.concatenate(train_features_to_encode, axis=0)
-    #codebook = MiniBatchKMeans(n_clusters=codebook_size, batch_size=codebook_size * 10)
-    codebook = AffinityPropagation()
-    start = time.time()
-    codebook.fit(train_features_to_encode)
-    end = time.time()
-    print('training took {} seconds'.format(end-start))
-    return codebook
-
-# to optimize
+# default
 def createCodebookMiniK(features, codebook_size=100):
     """Creates a visual BOW codebook"""
     train_features_to_encode = []
@@ -41,7 +26,7 @@ def createCodebookMiniK(features, codebook_size=100):
     print('training took {} seconds'.format(end-start))
     return codebook
 
-# reaches convergence pretty quick and is stable
+# higer max iterations, lower number of inits to reduce computational time
 def createCodebookFullK(features, codebook_size=100):
     """Creates a visual BOW codebook"""
     print("Using n_init = 4 and max_iter = 500")
@@ -60,7 +45,7 @@ def createCodebookFullK(features, codebook_size=100):
     print('training took {} seconds'.format(end-start))
     return codebook
 
-# reaches convergence pretty quick and is stable
+# higer max iterations, lower number of inits to reduce computational time, transforms data
 def createCodebookFullKWithPreProc(features, codebook_size=100):
     """Creates a visual BOW codebook"""
     print("Using n_init = 4 and max_iter = 500")
@@ -82,27 +67,28 @@ def createCodebookFullKWithPreProc(features, codebook_size=100):
     print('training took {} seconds'.format(end-start))
     return codebook
 
-# to optimize
+# Transforms data using PowerTransformer, which was optimal
 def createCodebookMiniKWithPreProc(features, codebook_size=100):
     """Creates a visual BOW codebook"""
-    print("Using manual")
+    print("Using PowerTransformer")
     train_features_to_encode = []
     for image_features in features:
         train_features_to_encode.append(image_features.data)
     train_features_to_encode = np.concatenate(train_features_to_encode, axis=0)
-    scaler = QuantileTransformer()
+    scaler = PowerTransformer()
     codebook = MiniBatchKMeans(n_clusters=codebook_size,
                                max_iter = 100,
                                reassignment_ratio = 0.01,
                                batch_size=codebook_size * 30)
     start = time.time()
-    #train_features_to_encode = scaler.fit_transform(train_features_to_encode)
-    train_features_to_encode = np.multiply(train_features_to_encode, np.abs(train_features_to_encode))
+    train_features_to_encode = scaler.fit_transform(train_features_to_encode)
+    #train_features_to_encode = np.multiply(train_features_to_encode, np.abs(train_features_to_encode))
     codebook.fit(train_features_to_encode)
     end = time.time()
     print('training took {} seconds'.format(end-start))
     return codebook, scaler
 
+# when encoding images, the data of the image should also be transformed with the same scaler/transformer used for clustering
 def encodeImageWithPreProc(features, codebook, scaler):
     """Encodes one image given a visual BOW codebook"""
     # find the minimal feature distance for all patches of the image
@@ -117,15 +103,18 @@ def encodeImageWithPreProc(features, codebook, scaler):
     return bovw_feature
 
 # to optimize
-def createCodebookMiniK(features, codebook_size=100):
+def createCodebookGaussianMixture(features, codebook_size=100):
     """Creates a visual BOW codebook"""
     train_features_to_encode = []
     for image_features in features:
         train_features_to_encode.append(image_features.data)
     train_features_to_encode = np.concatenate(train_features_to_encode, axis=0)
     codebook = GaussianMixture(n_components=codebook_size,
-                               max_iter = 100,
-                               n_init = 1)
+                               max_iter = 200,
+                               n_init = 4,
+                               verbose = 3,
+                               verbose_interval = 25
+                              )
     start = time.time()
     codebook.fit(train_features_to_encode)
     end = time.time()
