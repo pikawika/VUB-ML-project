@@ -9,7 +9,7 @@ from sklearn.cluster import KMeans
 from sklearn.mixture import GaussianMixture
 import pandas as pd
 
-# default
+# Default provided
 def createCodebookMiniK(features, codebook_size=100):
     """Creates a visual BOW codebook"""
     train_features_to_encode = []
@@ -26,7 +26,7 @@ def createCodebookMiniK(features, codebook_size=100):
     print('training took {} seconds'.format(end-start))
     return codebook
 
-# higer max iterations, lower number of inits to reduce computational time
+# Higer max iterations, lower number of inits to reduce computational time
 def createCodebookFullK(features, codebook_size=100):
     """Creates a visual BOW codebook"""
     print("Using n_init = 4 and max_iter = 500")
@@ -45,7 +45,7 @@ def createCodebookFullK(features, codebook_size=100):
     print('training took {} seconds'.format(end-start))
     return codebook
 
-# higer max iterations, lower number of inits to reduce computational time, transforms data
+# Higer max iterations, lower number of inits to reduce computational time, transforms data
 def createCodebookFullKWithPreProc(features, codebook_size=100):
     """Creates a visual BOW codebook"""
     print("Using n_init = 4 and max_iter = 600")
@@ -88,7 +88,7 @@ def createCodebookMiniKWithPreProc(features, codebook_size=100):
     print('training took {} seconds'.format(end-start))
     return codebook, scaler
 
-# when encoding images, the data of the image should also be transformed with the same scaler/transformer used for clustering
+# When encoding images, the data of the image should also be transformed with the same scaler/transformer used for clustering
 def encodeImageWithPreProc(features, codebook, scaler):
     """Encodes one image given a visual BOW codebook"""
     # find the minimal feature distance for all patches of the image
