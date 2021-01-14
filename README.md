@@ -13,7 +13,7 @@
 
 ## Main files
 - [Intermediate report](Intermediate_Report_ML_Project_Bontinck_Lennert_568702_VUB.pdf)
-- [Final report - Coming](Final_Report_ML_Project_Bontinck_Lennert_568702_VUB.pdf)
+- [Final report](Final_Report_ML_Project_Bontinck_Lennert_568702_VUB.pdf)
 
 ## Setting up the environment
 The required libraries can be installed by executing the following command from the root of this directory.
@@ -51,7 +51,7 @@ Include all scores, also Kaggle scores.
 
 Numbers in your CM!
 
-> - TODO
+> - There is now a normalized and non normalized variant of all CM which includes the numbers as requested. For the final model a seperate type of CM is made which shows both actual values and percentages at once.
 
 Try to put your figures in the text for readability.
 
@@ -67,13 +67,19 @@ SURF is left out by intention, if you want to use it, you can follow some tips i
 
 Your comment on the class_weight parameter is great, it shows that you ask the right questions. I won’t give away the actual answer to it, though, since it is important for your progress/report. Your next comment is related to it: I also can’t answer it directly, but I like that you think about these things, so good job already.
 
-> - TODO -> betere manier van test split
+> - Reasoning about this has been added after gaining inside from the model analysis.
 
 
 **General feedback:**
 
 Excellent start. I see a lot of good things, but also some (small) errors, which is normal of course.
 
+> - Thanks!
+
 Model analysis! 
 
+> - Done :)
+
 Also, even though this does not affect your grades, I am genuinely surprised your Kaggle score is not better based on your clear efforts.
+
+> - I know a lot of students just use the best values found by gridsearch without reasoning about it and they seem to have lucked out, fine-tuning the descriptor will also yield in much gains which I was not able to do given the time and computational limits. I'm hoping/thinking the private leaderboard will look differently from the public one.
