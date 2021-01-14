@@ -4,21 +4,35 @@
 
 %------------------------------------
 
-\section{What is learned}
+\section{What is learned and achieved}
 \label{section:con_achieved}
 
-TODO XXX
+This project has given a lot of insight into the working of different models and how model exploration is done.
+It has also shown that just blindly trusting \texttt{GridSearchCV} or received validation scores isn't a good idea.
+Whilst there is still a lot of room for improvement, the resulting final model seems to be pretty balanced and has an average accuracy of 50\% or more for all classes.
+Taking into account this is using the more \textit{old-school} Visual-Bag-of-Words approach, the results are satisfying and above average when looking at the public Kaggle leaderboard.
 
 %------------------------------------
 
 \section{The hurdles}
 \label{section:con_hurdles}
 
-TODO XXX
+Some of the calculations can take a lot of time, which means making small errors can be very time punishing.
+Some of the fundamentals of a model, such as used descriptor and cluster amount, are also fixed for the whole model exploration.
+Changing these fundamental parameters can influence the whole model's performance and thus can not be done \textit{after the fact}.
+This resulted in much recomputing work, which again, costs a lot of time.
+Due to limited computation power and time, experimenting with descriptors had to be kept to a minimum. 
+This is most likely the part where most of the remaining gains can be made.
+There is one known \textit{data leakage} present, namely the clustering of the features is done overall training images instead of only the training split.
+When this flaw was discovered, the K-Means clustering was already in use.
+Since this clustering algorithm takes 12+ hours this type of \textit{data leakage} is kept in.
+This also only has an effect on the validation set (not the actual test set) and is expected to be minimal, thus it is not as bad as it sounds.
 
 %------------------------------------
 
 \section{Further extensions}
 \label{section:con_extensions}
 
-TODO XXX
+As discussed, the models created in this report are by no means perfect.
+Most of the interesting further extensions are in experimenting with different descriptors and settings for them.
+A list of these possible extensions is given in section \ref{section:opt_unexplored}.

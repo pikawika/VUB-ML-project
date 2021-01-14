@@ -12,6 +12,7 @@ As per the requirements of the Kaggle competition, the test images should only b
 Thus the test images \textit{can not} be used for creating the model in any shape or form.
 This means that only the labelled training images can be used to create and validate the model in development.
 To avoid altering the model to perform well on the supplied test data and not in general, only the training data will be analysed.
+Data leakage is also an important factor that will have to be taken into account when creating a further train and validation set from the training data.
 All code used for this part is available under the developed code folder on GitHub, in the Jupyter Notebook \texttt{data\_analysis.ipynb}.
 This part will only analyze the data and make suggestions for possible preprocessing, it won't manipulate the data just yet.
 This notebook allows for changing parameters easily, which is crucial since this analysis has to be done for multiple descriptors and settings.
@@ -25,13 +26,13 @@ There is a total of 4042 labelled training images supplied, the distribution of 
 As visible in this figure, the distribution between classes is not balanced.
 This has to be taken into account when fitting a model since some models will show unwanted behaviour when fitted with unbalanced data.
 Luckily many solutions exist to minify the impact of this unbalance.
-This unbalance has to be kept in mind when using a split of the training set as a validation set as well.
+This unbalance has to be kept in mind when using a split of the training data as a validation set as well.
 This is because such split might lead to a test set where some classes have considerably fewer instances in the test set and thus the performance on those classes has less impact on the total score, which may be unwanted.
 
 \begin{figure}[H]
     \centering
-    \fbox{\includegraphics[width=0.65\linewidth]{images/1/1-data_analysis-labeled_data_distribution.png}}
-    \captionsetup{width=0.6\linewidth}
+    \fbox{\includegraphics[width=0.55\linewidth]{images/1/1-data_analysis-labeled_data_distribution.png}}
+    \captionsetup{width=0.5\linewidth}
     \captionsetup{justification=centering}
     \caption{Data distribution training data.}
     \label{fig:1-data_analysis-labeled_data_distribution}
@@ -58,87 +59,16 @@ The most noteworthy findings are listed here:
 
 This diversity in the provided training set is expected since it has been scraped from the web.
 This also means that \emph{noise} can be expected, another important factor to keep in mind when choosing and optimizing models.
-Many of the listed things can be minified by doing some clever prepossessing of the images or are already taken into account with by the used descriptor.
+Many of the listed things can be minified by doing some clever prepossessing of the images or are already taken into account by the used descriptor.
 
 
 %------------------------------------
 
-\section{Feature extraction}
-\label{section:DA_feature_extraction}
+\section{Feature extraction and numerical representation}
+\label{section:DA_feature_extraction_and_nr_rep}
 
-Some feature extraction has already been provided.
-In short, images are converted from there typical RGB representation to a numerical representation of interesting points, which can be used as input for our model.
-How this is done and could be optimized is briefly discussed here since it consists of provided code for the Kaggle competition.
+Due to exclusive use of the supplied SIFT descriptor features for this report, information for this section is given as an appendix (appendix A).
+The most important finding is the fact that the supplied \texttt{createCodebook} helper function uses \texttt{MiniBatchKMeans} for a given cluster amount, which can be fine-tuned.
+More clusters will often result in better performance but gives the risk of overfitting.
+It's also said the descriptor might benefit from fine-tuning as well, but this will not be done in this report, as will be discussed in part \ref{part:final_model}.
 
-Instead of using the whole image as data, only a select few of \textit{interesting points} of the image are taken into consideration.
-These interesting points of an image are often found by using the \emph{Shi-Tomasi corner detector}, but some descriptors have different implementations.
-As the name suggests, these interesting points are \textit{strong corners on an image}.
-
-Shown in figure \ref{fig:1-poi} is an example output of interesting points found by the Shi-Tomasi corner detector.
-It's clear that its performance varies a lot, but finding interesting points isn't an easy task and thus the results are better then they might seem on first sight.
-It's also noted that SIFT is used for the models in this report, which uses a different, patented, technique for interesting point detection.
-
-\begin{figure*}[ht]
-    \centering
-    \begin{subfigure}{.35\textwidth}
-        \centering
-        \fbox{\includegraphics[width=0.9\textwidth]{images/1/1-data_analysis-POI_chicken.png}}
-        \captionsetup{width=0.9\linewidth}
-        \captionsetup{justification=centering}
-        \caption{First chicken in data.}
-    \end{subfigure}
-    \hspace{1cm}
-    \begin{subfigure}{.52\textwidth}
-        \centering
-        \fbox{\includegraphics[width=0.9\textwidth]{images/1/1-data_analysis-POI_german_shepherd.png}}
-        \captionsetup{width=0.9\linewidth}
-        \captionsetup{justification=centering}
-        \caption{First German shepherd in train data}
-    \end{subfigure}
-    \captionsetup{width=0.8\linewidth}
-    \captionsetup{justification=centering}
-    \caption{Points of interest found by the Shi-Tomasi corner detector.}
-    \label{fig:1-poi}
-\end{figure*}
-
-
-%------------------------------------
-
-\section{The numerical representation}
-\label{section:DA_numerical_representation}
-
-These interesting points now need to be represented by numerical values that have actual meaning.
-Remember from section \ref{section:DA_deeper_look_data} that the provided images differ a lot.
-Thus the numerical representation, generated by a descriptor, has to be so that it minifies the impact of different lighting, scaling...
-afterwards, these values can be clustered together using the \texttt{createCodebook} function which uses Mini-Batch K-Means clustering.
-This could also benefit from fine-tuning.
-
-An overview showing histograms for each word (cluster) and a corresponding correlation matrix when opting for SIFT with 30 clusters is shown in figure \ref{fig:1-cm}.
-It is visible that the values are normalized.
-This would have to be checked for all descriptors used and perhaps some outliers would need to be removed.
-The correlation between these clusters doesn't seem too dramatic in this case ($|$correlation value$| \neq 1 $).
-A low correlation between clusters is mostly positive for model building since it suggests each cluster represent a distinct concept.
-This is again something that would have to be checked for different parameters.
-
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}{.45\textwidth}
-        \centering
-        \fbox{\includegraphics[width=0.7\textwidth]{images/1/1-data_analysis-feature_representation.png}}
-        \captionsetup{width=0.9\linewidth}
-        \captionsetup{justification=centering}
-        \caption{Histogram for each cluster.}
-    \end{subfigure}
-    \hspace{1cm}
-    \begin{subfigure}{.45\textwidth}
-        \centering
-        \fbox{\includegraphics[width=0.8\textwidth]{images/1/1-data_analysis-correlation_matrix.png}}
-        \captionsetup{width=0.9\linewidth}
-        \captionsetup{justification=centering}
-        \caption{Correlation matrix for all clusters.}
-    \end{subfigure}
-    \captionsetup{width=0.8\linewidth}
-    \captionsetup{justification=centering}
-    \caption{Data analysis of encoded images using SIFT with 30 clusters.}
-    \label{fig:1-cm}
-\end{figure}

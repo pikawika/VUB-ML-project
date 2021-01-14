@@ -22,7 +22,7 @@ The Notebook corresponding with this part is \texttt{gradient\_boosting.ipynb}.
 Fine-tuning and evaluation of the model is done in an equal manner as the previous models.
 This model doesn't have a parameter like class weight which specifies to work in a balanced manner.
 Due to the many parameters that need fine-tuning and limited computing power, the use of \texttt{GridSearchCV} was split over 2 independent searches.
-Found optima were retested to validate they don't influence previous determine parameters.
+Found optima were retested to validate they don't influence previous determined parameters.
 The tried parameters using \texttt{GridSearchCV} are listed here:
 \begin{itemize}
     \item Experiment 1:
@@ -46,6 +46,7 @@ The tried parameters using \texttt{GridSearchCV} are listed here:
 
 Whilst the Gradient Boosting approach is interesting, it didn't score well and there are signs of overfitting with an MCLL score of ± 0.21 on the training data using some settings.
 The latter could perhaps be resolved but since the model performed worse than the linear baseline model throughout testing, it was not explored further.
+Only SIFT with 100 clusters was considered.
 A MCLL score of ± 1.68 on the validation set, a SCV MCLL score of ± 1.62 and a Kaggle score of 1.70494 were achieved with the following parameters:
 \begin{itemize}
     \item Loss and learning rate: deviance and 0.01.

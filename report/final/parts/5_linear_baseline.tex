@@ -11,7 +11,7 @@ This model is often used as a linear baseline model to compare other models with
 Only models scoring better then this linear baseline model should be considered.
 This part discusses the parameters found to be optimal for this model in this setting and the road to finding these optimal parameters.
 The Python-based Jupyter Notebook corresponding with this part is \texttt{linear\_baseline\_model.ipynb}.
-This notebook will form a \emph{template} for future model exploration.
+This notebook will form a \emph{template} for future model exploration and will lay some defaults for the report.
 
 %------------------------------------
 
@@ -21,6 +21,7 @@ This notebook will form a \emph{template} for future model exploration.
 The multi-class Log Loss (abbreviated MCLL) score of a validation set taken from the training set is used to evaluate the model.
 This validation set kept the unbalance in mind.
 Stratified K-Folds cross-validation (abbreviated SCV) is also performed using MCLL for the final model (5 folds).
+The Stratified variant of K-Folds will again aid in keeping the unbalance in mind.
 This scoring strategy is the same as used in the Kaggle competition and will be the default in this report.
 
 %------------------------------------
@@ -28,8 +29,8 @@ This scoring strategy is the same as used in the Kaggle competition and will be 
 \section{Fine-tuning the input}
 \label{section:LBM_finetuning_clusters}
 The first step in finding optimal settings for the model is finding optimal settings for the input of the model.
-In this case, the parameters that can control the input are the number of clusters each image is separated into and the descriptor used as discussed in part \ref{part:data_analysis}.
-In general, more clusters often correspond to a better score, however, including many clusters can lead to overfitting of the model.
+In this case, the parameters that can control the input are the number of clusters each image is separated into and the descriptor used as discussed in Appendix A.
+In general, more clusters often correspond to a better score, however, including many clusters can lead to overfitting.
 The following values were tried to manually find an optimum:
 \begin{itemize}
     \item Descriptors: DAISY, ORB, FREAK, LUCID, VGG, BoostDesc, SIFT.
@@ -43,12 +44,11 @@ There are 2 ways of looking at this data.
 The descriptor that achieves the minimum with a certain cluster amount can be seen as the optimal setting.
 However, since clustering is used, one can consider the \emph{elbow method} to determine the optimal setting as well.
 Figure \ref{fig:2-input} shows the found results for all used descriptors and cluster amounts.
-When taking into consideration the elbow method, the \emph{SIFT} descriptor performs best with a cluster amount around 100.
-When looking at the minimum, it seems that the \emph{DAISY} descriptor would come out on top with a small margin.
-The SIFT approach seems more viable since the difference in score is minimal and the SIFT approach uses fewer clusters suggesting it is more general.
-In contrast, the Daisy approach has signs of overfitting.
-With a lower cluster amount, the correlation between clusters will also be less as discussed in section \ref{section:DA_numerical_representation}, which is favourable.
-The SIFT descriptor with 100 clusters will also be the default for this report.
+When taking into consideration the elbow method, the \emph{SIFT} descriptor is preferred with a cluster amount around 100.
+When looking at the minimum, it seems that the \emph{DAISY} descriptor would come out on top.
+The SIFT approach seems more viable since the difference in score is not that significant and the SIFT approach uses fewer clusters suggesting it is more general.
+With a lower cluster amount, the correlation between clusters will also be less as discussed in appendix A, which is favourable.
+The SIFT descriptor with 100 clusters will be used as default for this report, but will be reconsidered in part \ref{part:final_model}.
 
 \begin{figure*}[ht]
     \centering
@@ -90,14 +90,15 @@ The SIFT descriptor with 100 clusters will also be the default for this report.
 \end{wrapfigure}
 
 Since the training data is further split into a training and validation set, this splitting can also be fine-tuned.
+This validation set will often be referred to as test set in this report and accompanied code, since the actual test set is only used for Kaggle submissions.
 The parameter that can be fine-tuned is \textit{test\_size} and whether or not to take into account that the data set is \textit{unbalanced}.
 The latter is quite obvious as discussed in section \ref{section:DA_data_distribution} and thus the unbalance should be kept in mind.
 Ideally, there would be enough instances in the training set to make a specific enough model and there would be enough models in the validation set to get a representative score. 
-The following values test sizes were tested for the otherwise optimal settings: 5\%, 7.5\%, 10\%, 12.5\%, 15\%, 20\%, 25\%, 30\%.
-Figure \ref{fig:2-LBM-test_size_sift} shows the result of this experiment using average multi-class Log Loss score over 5 trials.
+The following test sizes were tested for the otherwise optimal settings: 5\%, 7.5\%, 10\%, 12.5\%, 15\%, 20\%, 25\%, 30\%.
+Figure \ref{fig:2-LBM-test_size_sift} shows the result of this experiment using average MCLL score over 5 trials.
 A healthy balance seems to be around 15\%.
 This will again be used as default in this report.
-
+A perfectly balanced test set will be considered in part \ref{part:final_model}.
 
 
 %------------------------------------
@@ -105,13 +106,12 @@ This will again be used as default in this report.
 \section{Fine-tuning the model parameters}
 \label{section:LBM_finetuning_model}
 
-Now that all of the parameters available for the input are fine-tuned, the parameters of the model itself can be optimized.
+Now that some of the important parameters available for the input are fine-tuned, the parameters of the model itself can be optimized.
 As found in the documentation of the \texttt{LogisticRegression} function available in the SciKit Learn library there are multiple (optional) parameters \citep{scikit_learn}.
-The most interesting ones are given in appendix A. 
-
+The most interesting ones are given in appendix B. 
 
 Before experimenting, it was assumed that changing the class weight parameter to balanced would enhance the performance due to the unbalance of the training data.
-Weirdly, this wasn't the case for the score received from the test set split from the training data nor on the Kaggle page.
+Weirdly, this wasn't the case for the score received from the evaluation set nor on the Kaggle page.
 Due to the unbalance the worse score for the split test set can be expected.
 However, the fact that the score is worse on the Kaggle competition, 1.60289 vs 1.67565, is not expected.
 The model analysis in part \ref{part:model_anal} will reveal these scores don't tell everything.
@@ -165,12 +165,12 @@ Since both approaches yield similar results, finding optimal parameters where no
     \label{fig:2-LBM-model_manual_c}
 \end{figure}
 
-\section{The optimal settings for this model}
+\section{The final settings for this model}
 \label{section:LBM_optimal}
 
-After all the fine-tuning discussed in the previous sections, an optimal model can be formed.
+After all the fine-tuning discussed in the previous sections, a final model is formed.
+This model doesn't use any preprocessing, which will be experimented with in part \ref{part:final_model}.
 The optimal settings and received score for the SIFT descriptor are given below.
-Note that the received Kaggle score is not drastically different from the received test scores which suggest no data leakage happened.
 \begin{itemize}
     \item Descriptor used: SIFT with 100 clusters.
     \item Sample size for validation set: 15\%.

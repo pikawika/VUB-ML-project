@@ -9,8 +9,8 @@
 
 Now that a fine-tuned linear baseline model is established, the search for better models can start.
 Sci Kit learn has a flow chart for deciding which estimator to use, \href{https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html}{available here}.
-When following this chart a Support Vector Classifier (SVC) is proposed, thus one is examined here.
-Since part \ref{part:linear_baseline} already exhaustively discusses the model testing strategy used, this part will go into less detail to avoid repetition. 
+When following this chart a Support Vector Classifier (SVC) is proposed, thus one is examined in this report.
+Since part \ref{part:linear_baseline} already exhaustively discusses the model testing strategy used, this report will go into less detail from now on to avoid repetition. 
 The Notebook corresponding with this part is \texttt{support\_vector\_classifier.ipynb}.
 
 
@@ -19,14 +19,11 @@ The Notebook corresponding with this part is \texttt{support\_vector\_classifier
 \section{Scoring and methodology for fine-tuning}
 \label{section:SVC_methodology}
 
-Again, the multi-class Log Loss (MCLL) score is used to compare models.
-\texttt{GridSearchCV} was used to find optimal parameters were no human reasoning is needed.
-Figure \ref{fig:3-clusters} shows the results of experimenting with different clusters and descriptors.
-It is noted that overfitting is clearly visible when using over 250 clusters.
-For the final model SIFT with 100 clusters is used.
+Again, the MCLL score is used to compare models.
+\texttt{GridSearchCV} was used to find optimal parameters were no human reasoning is needed. 
+In this part, SIFT with 100 clusters was used to find optima parameters, this is reconsidered in part \ref{part:final_model}.
 
 Balancing the class weight had a small positive impact, which is great!
-The non-balanced one is discussed here but found parameters and reasoning are identical for both.
 Making the toll more precise had a negligible impact (-0.00) on the results thus it is left default.
 \texttt{GridSearchCV} was used to find the optima for C and gamma for the \textit{rbf}, \textit{sigmoid} and \textit{poly} kernel.
 For the poly kernel, it was also used to find an optimal degree.
@@ -53,6 +50,11 @@ What follows are tested parameters and the found optimal for each of these exper
         \item Found optima: C between 1 and 5 | degree = 3 | gamma = scale, auto or 0.01  | SCV MCLL score of ± 1.59.
     \end{itemize}
 \end{itemize}
+
+Figure \ref{fig:3-clusters} shows the results of experimenting with different clusters and descriptors for the found optima.
+Over-fitting is visible when using over 250 clusters.
+This conclusion only holds for the current settings, which uses a fixed gamma.
+This will again be reconsidered in part \ref{part:final_model}.
 
 \begin{figure*}[ht]
     \centering
@@ -93,15 +95,15 @@ The results from this further fine-tuning were negligible, C = 1.75 and gamma = 
 
 %------------------------------------
 
-\section{The optimal settings for this model}
+\section{The final settings for this model}
 \label{section:svc_optimal}
 
-The optimal settings and received score for the described model are:
+The final settings and received score for the described model are:
 \begin{itemize}
     \item Descriptor used: SIFT with 100 clusters
     \item Sample size for validation set: 15\%
-    \item Class weight = balanced
-    \item C =  1.75 | gamma = 0.01 | kernel = rbf | tol = 0.001
+    \item Class weight: balanced
+    \item C:  1.75 | gamma: 0.01 | kernel: rbf | tol: 0.001
     \item MCLL score for validation set: ± 1.45 (balanced and unbalanced)
     \item SCV MCLL score: ± 1.48 (balanced and unbalanced)
     \item Score received on Kaggle: 1.55355 (non-balanced), 1.53626 (balanced)

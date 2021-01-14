@@ -29,14 +29,14 @@ A short discussion of the tried parameters and found results using \texttt{GridS
     \begin{itemize}
         \item Tested C: 0.001, 0.01 , 0.1, 0.5, 1.0, 1.5, 3, 5, 10 and 100.
         \item Tested gamma: "scale", "auto", 0.001, 0.01 , 0.1, 0.5, 1.0, 1.5, 3, 5, 10 and 100.
-        \item Found optima: C = 0.01 | gamma had no influence, 0.001 is chosen | SCV MCLL score of ± 1.56.
+        \item Found optima: C: 0.01 | gamma had no influence, 0.001 is chosen | SCV MCLL score of ± 1.56.
     \end{itemize}
     \item \texttt{LinearSVC}:
     \begin{itemize}
         \item Tested C: 0.001, 0.01 , 0.1, 0.5, 1.0, 1.5, 3, 5, 10 and 100.
         \item Tested penalty and loss: l1 and l2 | hinge and squared hinge.
         \item Tested dual: True and False.
-        \item Found optima: C = 0.1 | penalty = l1 | dual = False | loss = squared hinge | SCV MCLL score of ± 1.63.
+        \item Found optima: C: 0.1 | penalty: l1 | dual: False | loss: squared hinge | SCV MCLL score of ± 1.63.
     \end{itemize}
 \end{itemize}
 
@@ -49,5 +49,6 @@ The SVC model with linear kernel performed better than the LinearSVC model.
 Further fine-tuning around the found optima didn't gain any performance.
 It is noted that LinearSVC often \textit{fitted quicker}, which perhaps explains it's existence.
 Since the linear SVC approach performed worse then the optimal SVC found in part \ref{part:svc} it was not discussed in great detail and is not explored further.
+Only SIFT with 100 clusters was tested.
 During testing, the received MCLL score for the validation set was ± 1.60 and the SCV MCLL score was ± 1.55.
 The received Kaggle score for the optimal linear SVC model is 1.59520.

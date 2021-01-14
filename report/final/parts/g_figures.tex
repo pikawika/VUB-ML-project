@@ -79,3 +79,33 @@ Some figures are referred to in the text but not placed directly under the text.
     \caption{Confusion matrices for the linear Support Vector Classifier model.}
     \label{fig:ma_linsvc_cm}
 \end{figure*}
+
+
+
+%------------------------------------
+\clearpage
+\section*{Confusion matrices of the final model's underlying models}
+
+\begin{figure*}[ht]
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \fbox{\includegraphics[width=\textwidth]{images/final/cm/underlying_LBM_merged.png}}
+        \captionsetup{width=0.8\linewidth}
+        \captionsetup{justification=centering}
+        \caption{Underlying LBM model.}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \fbox{\includegraphics[width=\textwidth]{images/final/cm/underlying_SVC_merged.png}}
+        \captionsetup{width=0.8\linewidth}
+        \captionsetup{justification=centering}
+        \caption{Underlying SVC model.}
+    \end{subfigure}
+    \captionsetup{width=0.9\linewidth}
+    \captionsetup{justification=centering}
+    \caption{Underlying models of the final model using the merged classes.}
+\end{figure*}
+
+Due to the having reached the size limit of Overleaf, all other confusion matrices for the underlying models and sub-models are available on the GitHub repository under the the graph folder available in the code folder \citep{github_project}.
