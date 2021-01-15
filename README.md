@@ -4,8 +4,8 @@
 > - [Student info]("#student-info")
 > - [Main files]("#main-files")
 > - [Setting up the environment](#setting-up-the-environment)
-> - [Feedback](#feedback)
 > - [How to confuse this AI](#how-to-confuse-this-ai)
+> - [Feedback](#feedback)
 
 ## Student info
 - **Name**: Bontinck Lennert
