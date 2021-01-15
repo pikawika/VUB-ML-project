@@ -23,10 +23,13 @@ Changing these fundamental parameters can influence the whole model's performanc
 This resulted in much recomputing work, which again, costs a lot of time.
 Due to limited computation power and time, experimenting with descriptors had to be kept to a minimum. 
 This is most likely the part where most of the remaining gains can be made.
-There is one known \textit{data leakage} present, namely the clustering of the features is done overall training images instead of only the training split.
-When this flaw was discovered, the K-Means clustering was already in use.
-Since this clustering algorithm takes 12+ hours this type of \textit{data leakage} is kept in.
-This also only has an effect on the validation set (not the actual test set) and is expected to be minimal, thus it is not as bad as it sounds.
+
+There is one known \textit{data leakage} present, namely the clustering of the features is done using all training data instead of only the \textit{training split}.
+When this flaw was discovered, K-Means clustering was already in use.
+Since this clustering algorithm takes 12+ hours to complete, this type of \textit{data leakage} had to be kept in due to time limits.
+In an ideal world, only the training split would be used when using a validation set for validating the model.
+For the eventual model, the complete training data would be used and thus the clustering would be done on the complete training data, as is now the case.
+Thus, the expected impact of this data leakage for the final model is not expected to be drastic, but it was thought of. 
 
 %------------------------------------
 
