@@ -32,8 +32,9 @@ Some of the required files are left out to limit the size of this GitHub reposit
 - "images" folder inside the code folder, inside this folder are the test and train folder as provided by the Kaggle competition. 
 
 
-## How to confuse this AI:
+## How to confuse this AI
 Below is an image that would really confuse this AI, and perhaps it confuses us a bit too.
+This is just a bit of fun, since I'm sure grading all these reports can be quite exhaustive.
 
 ![Just a little goof to make your day better :)](report/bit_of_fun.jpg)
 
