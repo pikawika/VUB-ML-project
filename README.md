@@ -5,6 +5,7 @@
 > - [Main files]("#main-files")
 > - [Setting up the environment](#setting-up-the-environment)
 > - [Feedback](#feedback)
+> - [How to confuse this AI](#how-to-confuse-this-ai)
 
 ## Student info
 - **Name**: Bontinck Lennert
@@ -30,6 +31,11 @@ Some of the required files are left out to limit the size of this GitHub reposit
 - "feautures"  folder inside the provided code folder AND  the developed code folder.
 - "images" folder inside the code folder, inside this folder are the test and train folder as provided by the Kaggle competition. 
 
+
+## How to confuse this AI:
+Below is an image that would really confuse this AI, and perhaps it confuses us a bit too.
+
+![Just a little goof to make your day better :)](report/bit_of_fun.jpg)
 
 ## Feedback:
 
